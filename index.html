@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Prize wheel">
+<meta name="theme-color" content="#e4ebe5">
+<script>try{var t=localStorage.getItem("cueClubWheelTheme");if(t==="light"||t==="dark"||t==="cue"||t==="auto")document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
+<title>Prize wheel</title>
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #e4ebe5;
+    --bg-image: none;
+    --panel: #f4f7f3;
+    --ink: #12281f;
+    --muted: #4f6a5d;
+    --line: #b9cbbe;
+    --field: #ffffff;
+    --brass: #c9a24b;
+    --ring: #c9a24b;
+    --btn-bg: #17503b;
+    --btn-ink: #f4f7f3;
+    --focus: #8a6a1f;
+    --good: #1b7a45;
+    --bad: #c8102e;
+    --brand-filter: none;
+    --title-shadow: none;
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #0e2a20;
+    --panel: #143828;
+    --ink: #eef3ec;
+    --muted: #9db8a9;
+    --line: #2a5a45;
+    --field: #0e2a20;
+    --brass: #d8b25a;
+    --ring: #d8b25a;
+    --btn-bg: #d8b25a;
+    --btn-ink: #1a1405;
+    --focus: #d8b25a;
+    --good: #6fe3a0;
+    --bad: #ff7b8a;
+    --brand-filter: drop-shadow(0 0 1.5px rgba(255,255,255,.8));
+  }
+  @media (prefers-color-scheme: dark) {
+    :root[data-theme="auto"] {
+      color-scheme: dark;
+      --bg: #0e2a20;
+      --panel: #143828;
+      --ink: #eef3ec;
+      --muted: #9db8a9;
+      --line: #2a5a45;
+      --field: #0e2a20;
+      --brass: #d8b25a;
+      --ring: #d8b25a;
+      --btn-bg: #d8b25a;
+      --btn-ink: #1a1405;
+      --focus: #d8b25a;
+      --good: #6fe3a0;
+      --bad: #ff7b8a;
+      --brand-filter: drop-shadow(0 0 1.5px rgba(255,255,255,.8));
+    }
+  }
+  /* Cue Club: snooker-table green, black, chalk white, yellow and red balls */
+  :root[data-theme="cue"] {
+    color-scheme: dark;
+    --bg: #0c4a29;
+    --bg-image: radial-gradient(ellipse at 50% 28%, #1f8a4f 0%, #0f5c34 48%, #07331c 100%);
+    --panel: #111513;
+    --ink: #f4efe1;
+    --muted: #b8b39f;
+    --line: #35403a;
+    --field: #0a0d0b;
+    --brass: #f2c811;
+    --ring: #f4efe1;
+    --btn-bg: #f2c811;
+    --btn-ink: #14110a;
+    --focus: #f2c811;
+    --good: #6fe3a0;
+    --bad: #ff6b7a;
+    --brand-filter: drop-shadow(0 0 1.5px rgba(255,255,255,.85));
+    --title-shadow: 0 2px 10px rgba(0,0,0,.45);
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; }
+  button { touch-action: manipulation; }
+  html { background: var(--bg); }
+  body {
+    background-color: var(--bg);
+    background-image: var(--bg-image);
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.45;
+  }
+  h1 {
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    margin: 0 0 4px;
+    letter-spacing: 0.01em;
+    text-shadow: var(--title-shadow);
+  }
+  .page { max-width: 760px; margin: 0 auto; padding: max(84px, calc(env(safe-area-inset-top) + 70px)) 20px 40px; }
+  header { margin-bottom: 14px; text-align: center; }
+
+  .stage { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+  .wheel-wrap { width: min(100%, 640px, 78vh); aspect-ratio: 1; }
+  canvas { width: 100%; height: 100%; display: block; filter: drop-shadow(0 14px 22px rgba(0,0,0,.35)); }
+  .spin {
+    font: inherit; font-weight: 700; font-size: 1.25rem; letter-spacing: .04em;
+    padding: 14px 64px; border: 0; border-radius: 999px; cursor: pointer;
+    background: var(--btn-bg); color: var(--btn-ink);
+    box-shadow: 0 0 0 3px var(--ring), 0 8px 18px rgba(0,0,0,.25);
+    transition: transform .08s ease;
+  }
+  .spin:active { transform: translateY(1px); }
+  .spin:disabled { opacity: .55; cursor: not-allowed; }
+
+  .result {
+    min-height: 3.6em; text-align: center; width: min(100%, 460px);
+    padding: 12px 16px; border-radius: 12px; background: var(--panel); border: 1px solid var(--line);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  }
+  .result .big { display: inline-flex; align-items: center; gap: 10px; font-size: 1.5rem; font-weight: 800; }
+  .result .big.good { color: var(--good); }
+  .result .big.bad { color: var(--bad); }
+  .result .dot { width: 14px; height: 14px; border-radius: 50%; flex: none; }
+  .result .sub { color: var(--muted); font-size: .95rem; }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+  .gamble-btn, .collect-btn {
+    font: inherit; font-weight: 800; font-size: 1.1rem; letter-spacing: .12em; text-transform: uppercase;
+    padding: 12px 24px; border: 0; border-radius: 12px; cursor: pointer; color: #fff;
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  .gamble-btn { background: #c8102e; box-shadow: 0 0 0 3px #f0d58a, 0 6px 16px rgba(200,16,46,.45); }
+  .collect-btn { background: #0a8a35; box-shadow: 0 0 0 3px #2fc55f, 0 6px 16px rgba(10,138,53,.45); animation: none; }
+  @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+  @media (prefers-reduced-motion: reduce) { .gamble-btn, .collect-btn { animation: none; } }
+
+  .celebrate {
+    position: fixed; inset: 0; z-index: 25; display: none; align-items: center; justify-content: center;
+    background: rgba(0,0,0,.8); padding: 20px;
+  }
+  .celebrate.show { display: flex; }
+  #fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .cel-card {
+    position: relative; width: min(360px, 100%); text-align: center; background: var(--panel);
+    border: 2px solid var(--brass); border-radius: 22px; padding: 26px 22px 22px;
+    box-shadow: 0 0 40px rgba(242,200,17,.35), 0 20px 50px rgba(0,0,0,.5);
+    animation: pop .45s cubic-bezier(.2,1.4,.4,1);
+  }
+  @keyframes pop { from { transform: scale(.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .cel-title {
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    font-size: 1.8rem; font-weight: 700; color: var(--focus); letter-spacing: .02em;
+  }
+  .cel-sub { color: var(--muted); margin: 6px 0 4px; }
+  .cel-prize {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    font-size: 2rem; font-weight: 800; line-height: 1.15; margin: 4px 0 18px; overflow-wrap: anywhere;
+  }
+  .cel-prize .dot { width: 16px; height: 16px; border-radius: 50%; flex: none; }
+  .cel-done {
+    font: inherit; font-weight: 700; font-size: 1.1rem; letter-spacing: .06em; padding: 12px 44px;
+    border: 0; border-radius: 999px; cursor: pointer; background: var(--btn-bg); color: var(--btn-ink);
+    box-shadow: 0 0 0 3px var(--ring);
+  }
+  @media (prefers-reduced-motion: reduce) { .cel-card { animation: none; } }
+
+  .menu-btn {
+    position: fixed; top: max(14px, env(safe-area-inset-top)); right: 14px; z-index: 5;
+    width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
+    border: 1px solid var(--line); background: var(--panel); color: var(--ink); opacity: .85;
+  }
+  .menu-btn:disabled { opacity: .3; cursor: not-allowed; }
+  .brand {
+    position: fixed; top: max(14px, env(safe-area-inset-top)); left: max(14px, env(safe-area-inset-left));
+    z-index: 5; height: 56px; width: auto; display: block; filter: var(--brand-filter);
+  }
+  .backdrop {
+    position: fixed; inset: 0; z-index: 9; background: rgba(0,0,0,.5);
+    opacity: 0; pointer-events: none; transition: opacity .25s ease;
+  }
+  .backdrop.show { opacity: 1; pointer-events: auto; }
+  .drawer {
+    position: fixed; top: 0; right: 0; bottom: 0; z-index: 10; width: min(440px, 100%);
+    background: var(--panel); border-left: 1px solid var(--line); overflow-y: auto;
+    padding: max(18px, env(safe-area-inset-top)) 18px 32px;
+    transform: translateX(100%); visibility: hidden;
+    transition: transform .25s ease, visibility 0s .25s;
+  }
+  .drawer.open { transform: none; visibility: visible; transition: transform .25s ease, visibility 0s; }
+  .drawer-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .drawer h2 { font-size: 1.15rem; margin: 0; }
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-size: .9rem; color: var(--muted); margin-bottom: 4px; }
+  .field input[type="text"] {
+    font: inherit; color: var(--ink); background: var(--field); width: 100%;
+    border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px;
+  }
+  @media (prefers-reduced-motion: reduce) { .drawer, .backdrop { transition: none; } }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px; }
+  fieldset.seg { border: 1px solid var(--line); border-radius: 10px; padding: 2px; margin: 0; display: inline-flex; }
+  fieldset.seg legend { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .seg label { position: relative; }
+  .seg input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+  .seg span { display: block; padding: 6px 12px; border-radius: 8px; font-size: .9rem; cursor: pointer; }
+  .seg input:checked + span { background: var(--btn-bg); color: var(--btn-ink); }
+  .seg input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .btn {
+    font: inherit; font-size: .9rem; padding: 7px 12px; border-radius: 10px; cursor: pointer;
+    border: 1px solid var(--line); background: transparent; color: var(--ink);
+  }
+  .btn:hover:not(:disabled) { border-color: var(--brass); }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+  .btn.primary { background: var(--btn-bg); color: var(--btn-ink); border-color: transparent; }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+  ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  .row {
+    display: grid; grid-template-columns: 34px 1fr 40px 40px; gap: 6px 8px; align-items: center;
+    padding: 10px; border: 1px solid var(--line); border-radius: 12px;
+  }
+  .row input[type="color"] { width: 34px; height: 34px; padding: 0; border: 0; border-radius: 8px; background: none; cursor: pointer; }
+  .row input[type="text"], .row input[type="number"] {
+    font: inherit; color: var(--ink); background: var(--field);
+    border: 1px solid var(--line); border-radius: 8px; padding: 7px 9px; width: 100%; min-width: 0;
+  }
+  .icon-btn {
+    width: 40px; height: 34px; display: grid; place-items: center; cursor: pointer;
+    border: 1px solid var(--line); border-radius: 8px; background: transparent; color: var(--muted); font-size: 1.2rem;
+  }
+  .icon-btn:hover:not(:disabled) { color: var(--ink); border-color: var(--brass); }
+  .icon-btn[aria-pressed="true"] { background: var(--btn-bg); color: var(--btn-ink); border-color: transparent; }
+  .icon-btn:disabled { opacity: .4; cursor: not-allowed; }
+  .slider { grid-column: 1 / 3; width: 100%; accent-color: var(--brass); }
+  .pct { grid-column: 3 / 5; display: flex; align-items: center; gap: 4px; color: var(--muted); }
+  .opt { grid-column: 1 / -1; display: flex; align-items: center; gap: 8px; font-size: .85rem; color: var(--muted); }
+  .opt input { width: 18px; height: 18px; accent-color: var(--brass); }
+  .obs { grid-column: 1 / -1; font-size: .82rem; color: var(--muted); }
+  .obs:empty { display: none; }
+  .foot { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 14px; }
+  .foot .count { margin-left: auto; color: var(--muted); font-size: .85rem; }
+  .note { color: var(--muted); font-size: .85rem; margin: 12px 0 0; }
+
+  /* PIN pad */
+  .pin {
+    position: fixed; inset: 0; z-index: 30; display: none; align-items: center; justify-content: center;
+    background: rgba(0,0,0,.65); padding: 20px;
+  }
+  .pin.show { display: flex; }
+  .pin-card {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 20px;
+    padding: 22px 20px 18px; width: min(320px, 100%); text-align: center; user-select: none; -webkit-user-select: none;
+  }
+  .pin-title { font-size: 1.2rem; font-weight: 700; margin: 0 0 4px; }
+  .pin-msg { min-height: 1.4em; color: var(--muted); font-size: .9rem; margin: 0 0 12px; }
+  .pdots { display: flex; gap: 14px; justify-content: center; margin-bottom: 18px; }
+  .pdot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--ink); }
+  .pdot.on { background: var(--ink); }
+  .keys { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .key {
+    font: inherit; font-size: 1.5rem; height: 58px; border-radius: 14px; cursor: pointer;
+    border: 1px solid var(--line); background: var(--field); color: var(--ink);
+  }
+  .key:active { background: var(--line); }
+  .key.fn { font-size: .95rem; background: transparent; color: var(--muted); }
+  .shake { animation: shake .35s; }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); } 20% { transform: translateX(-9px); }
+    40% { transform: translateX(9px); } 60% { transform: translateX(-6px); } 80% { transform: translateX(6px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) { .spin { transition: none; } .shake { animation: none; } }
+</style>
+</head>
+<body>
+<button id="menuBtn" class="menu-btn" type="button" aria-label="Open settings" aria-expanded="false" aria-controls="drawer">
+  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+</button>
+
+<img class="brand" alt="The Cue Club" src="data:image/webp;base64,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">
+
+<div class="page">
+  <header><h1 id="title">Prize wheel</h1></header>
+  <section class="stage" aria-label="Wheel">
+    <div class="wheel-wrap"><canvas id="wheel" role="img" aria-label="Prize wheel"></canvas></div>
+    <button id="spin" class="spin" type="button">Spin</button>
+    <div id="result" class="result" aria-live="polite"></div>
+  </section>
+</div>
+
+<div id="backdrop" class="backdrop"></div>
+
+<aside id="drawer" class="drawer" aria-label="Prizes and Odds" inert>
+  <div class="drawer-head">
+    <h2>Prizes and Odds</h2>
+    <button id="closeBtn" class="icon-btn" type="button" aria-label="Close settings">&times;</button>
+  </div>
+
+  <div class="field">
+    <label for="titleInput">Wheel title</label>
+    <input id="titleInput" type="text" maxlength="40" value="Prize wheel">
+  </div>
+
+  <div class="toolbar">
+    <fieldset class="seg">
+      <legend>Theme</legend>
+      <label><input type="radio" name="theme" value="auto" checked><span>Auto</span></label>
+      <label><input type="radio" name="theme" value="light"><span>Light</span></label>
+      <label><input type="radio" name="theme" value="dark"><span>Dark</span></label>
+      <label><input type="radio" name="theme" value="cue"><span>Cue Club</span></label>
+    </fieldset>
+  </div>
+
+  <div class="toolbar">
+    <fieldset class="seg">
+      <legend>Slice size</legend>
+      <label><input type="radio" name="mode" value="equal" checked><span>Equal slices</span></label>
+      <label><input type="radio" name="mode" value="odds"><span>Sized by odds</span></label>
+    </fieldset>
+    <button id="equalise" class="btn" type="button">Make odds equal</button>
+  </div>
+
+  <div class="toolbar">
+    <fieldset class="seg">
+      <legend>Spin length</legend>
+      <label><input type="radio" name="len" value="6000"><span>Short &middot; 6s</span></label>
+      <label><input type="radio" name="len" value="10000" checked><span>Long &middot; 10s</span></label>
+      <label><input type="radio" name="len" value="15000"><span>Epic &middot; 15s</span></label>
+    </fieldset>
+  </div>
+
+  <ul id="list"></ul>
+
+  <div class="foot">
+    <button id="add" class="btn primary" type="button">Add prize</button>
+    <button id="simulate" class="btn" type="button">Test 1,000 spins</button>
+    <button id="reset" class="btn" type="button">Clear results</button>
+    <button id="changePin" class="btn" type="button">Change PIN</button>
+    <span id="spinCount" class="count"></span>
+  </div>
+  <p class="note">Odds always add up to 100%. Moving one slider rescales the others, except locked ones. Use "Equal slices" so the wheel itself doesn't show the odds. The gamble wheel is always a fair 50/50. Untick "Allow gamble on this prize" on a losing slice to hide its COLLECT and GAMBLE buttons. Prize settings reset when you close the page. Your PIN and theme are kept on this phone.</p>
+</aside>
+
+<div id="pin" class="pin" role="dialog" aria-modal="true" aria-labelledby="pinTitle">
+  <div class="pin-card">
+    <h2 id="pinTitle" class="pin-title">Enter PIN</h2>
+    <p id="pinMsg" class="pin-msg"></p>
+    <div id="pinDots" class="pdots"></div>
+    <div id="pinKeys" class="keys"></div>
+  </div>
+</div>
+
+<div id="celebrate" class="celebrate" role="dialog" aria-modal="true" aria-labelledby="celTitle">
+  <canvas id="fx"></canvas>
+  <div class="cel-card">
+    <div id="celTitle" class="cel-title">CONGRATULATIONS!</div>
+    <div class="cel-sub">You won</div>
+    <div id="celPrize" class="cel-prize"></div>
+    <button id="celDone" class="cel-done" type="button">DONE</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  const TAU = Math.PI * 2;
+  const MAX = 24, MIN = 2;
+  const PALETTE = ["#c8102e","#e8731a","#f2c811","#8fbf2a","#1f9d55","#0e8f8a",
+                   "#1fa5d6","#2f5da8","#4b3fa8","#7a3e8e","#c74b9a","#e88aa8",
+                   "#7b4a1e","#5d6d7e","#2b2b2b","#ff6f61","#3d8b37","#00b3b3",
+                   "#6c5ce7","#d35400","#16a085","#b8860b","#8e44ad","#2c3e50"];
+  const FONT = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
+  const GAMBLE_SLICES = [
+    { name: "WINNER", color: "#2e7d5b", weight: 50 },
+    { name: "LOSER",  color: "#b3242f", weight: 50 }
+  ];
+
+  let uid = 0;
+  const make = (name, weight, color) => ({
+    id: ++uid, name, weight, color, locked: false, gamble: true, count: 0
+  });
+  function nextColor() {
+    const used = new Set(prizes.map(p => p.color));
+    const free = PALETTE.find(c => !used.has(c));
+    return free || PALETTE[uid % PALETTE.length];
+  }
+
+  let prizes = Array.from({ length: 15 }, (_, k) => make("Prize " + (k + 1), 100 / 15, PALETTE[k]));
+
+  let mode = "equal";
+  let view = "main";               // "main" prize wheel or "gamble" 50/50 wheel
+  let rot = 0;
+  const rots = { main: 0, gamble: 0 };
+  let spinning = false;
+  let spinMs = 10000;
+  let totalSpins = 0, gambles = 0, gambleWins = 0;
+  let pending = null;              // prize that could be gambled right now
+  let gambling = null;             // prize being gambled
+  let backTimer = null;
+  let titleText = "Prize wheel";
+
+  const $ = id => document.getElementById(id);
+  const canvas = $("wheel"), ctx = canvas.getContext("2d");
+  const list = $("list"), result = $("result");
+  const fmt = x => String(Math.round(x * 10) / 10);
+  const mod = (a, n) => ((a % n) + n) % n;
+  const slices = () => view === "gamble" ? GAMBLE_SLICES : prizes;
+
+  /* ---------- odds maths ---------- */
+  function setWeight(i, val) {
+    const p = prizes[i];
+    const others = prizes.filter((_, j) => j !== i);
+    const free = others.filter(o => !o.locked);
+    if (!free.length) return;
+    const lockedSum = others.filter(o => o.locked).reduce((s, o) => s + o.weight, 0);
+    const v = Math.max(0, Math.min(100 - lockedSum, val));
+    p.weight = v;
+    const rest = 100 - v - lockedSum;
+    const freeSum = free.reduce((s, o) => s + o.weight, 0);
+    if (freeSum > 0) free.forEach(o => o.weight = o.weight * rest / freeSum);
+    else free.forEach(o => o.weight = rest / free.length);
+  }
+
+  function normalise() {
+    const free = prizes.filter(p => !p.locked);
+    const pool = free.length ? free : prizes;
+    const lockedSum = free.length ? prizes.filter(p => p.locked).reduce((s, p) => s + p.weight, 0) : 0;
+    const target = 100 - lockedSum;
+    const sum = pool.reduce((s, p) => s + p.weight, 0);
+    if (sum > 0) pool.forEach(p => p.weight = p.weight * target / sum);
+    else pool.forEach(p => p.weight = target / pool.length);
+  }
+
+  function pickIndex(items) {
+    const total = items.reduce((s, p) => s + p.weight, 0);
+    let r = Math.random() * total;
+    for (let i = 0; i < items.length; i++) {
+      r -= items[i].weight;
+      if (r < 0 && items[i].weight > 0) return i;
+    }
+    for (let i = items.length - 1; i >= 0; i--) if (items[i].weight > 0) return i;
+    return 0;
+  }
+
+  /* ---------- wheel drawing ---------- */
+  function geometry() {
+    const items = slices();
+    const n = items.length;
+    const equal = view === "gamble" || mode === "equal";
+    let a = 0;
+    return items.map(p => {
+      const size = equal ? TAU / n : TAU * p.weight / 100;
+      const g = { start: a, size };
+      a += size;
+      return g;
+    });
+  }
+
+  function textOn(hex) {
+    const n = parseInt(hex.slice(1), 16);
+    const lum = (0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255)) / 255;
+    return lum > 0.6 ? "#1a1a1a" : "#ffffff";
+  }
+
+  function resize() {
+    const dpr = window.devicePixelRatio || 1;
+    const s = Math.round(canvas.clientWidth * dpr);
+    if (s && canvas.width !== s) { canvas.width = s; canvas.height = s; }
+    draw();
+  }
+
+  function draw() {
+    const S = canvas.width;
+    if (!S) return;
+    const c = S / 2;
+    const R = S * 0.46;
+    const Rw = R * 0.93;
+    ctx.clearRect(0, 0, S, S);
+    ctx.save();
+    ctx.translate(c, c);
+
+    const cue = document.documentElement.getAttribute("data-theme") === "cue";
+    const rim = ctx.createLinearGradient(-R, -R, R, R);
+    if (cue) { rim.addColorStop(0, "#9a6a36"); rim.addColorStop(.5, "#4a2a10"); rim.addColorStop(1, "#83562a"); }
+    else { rim.addColorStop(0, "#f0d58a"); rim.addColorStop(.5, "#b98f33"); rim.addColorStop(1, "#e3c26c"); }
+    ctx.beginPath(); ctx.arc(0, 0, R, 0, TAU); ctx.fillStyle = rim; ctx.fill();
+
+    const items = slices();
+    const geo = geometry();
+    items.forEach((p, i) => {
+      const g = geo[i];
+      if (g.size <= 0) return;
+      const a0 = rot + g.start, a1 = a0 + g.size;
+      ctx.beginPath(); ctx.moveTo(0, 0); ctx.arc(0, 0, Rw, a0, a1); ctx.closePath();
+      ctx.fillStyle = p.color; ctx.fill();
+      ctx.lineWidth = Math.max(1, S * 0.003); ctx.strokeStyle = "rgba(255,255,255,.55)"; ctx.stroke();
+
+      let f = Math.min(Rw * (view === "gamble" ? 0.17 : 0.11), Rw * 0.6 * g.size * 0.55);
+      if (f < 8) return;
+      ctx.save();
+      ctx.rotate(rot + g.start + g.size / 2);
+      ctx.fillStyle = textOn(p.color);
+      ctx.textAlign = "right"; ctx.textBaseline = "middle";
+      const maxW = Rw * 0.66;
+      let text = p.name || "";
+      ctx.font = `600 ${f}px ${FONT}`;
+      while (ctx.measureText(text).width > maxW && f > 9) { f -= 1; ctx.font = `600 ${f}px ${FONT}`; }
+      while (text.length > 1 && ctx.measureText(text).width > maxW) text = text.slice(0, -1);
+      if (text !== p.name && text.length) text = text.trimEnd() + "\u2026";
+      ctx.fillText(text, Rw - Rw * 0.07, 0);
+      ctx.restore();
+    });
+
+    if (cue) {
+      ctx.beginPath(); ctx.arc(0, 0, Rw, 0, TAU);
+      ctx.lineWidth = S * 0.008; ctx.strokeStyle = "#111111"; ctx.stroke();
+    }
+
+    const studs = 28;
+    for (let i = 0; i < studs; i++) {
+      const a = (i / studs) * TAU;
+      ctx.beginPath();
+      ctx.arc(Math.cos(a) * (R * 0.965), Math.sin(a) * (R * 0.965), R * 0.016, 0, TAU);
+      ctx.fillStyle = cue ? "#f4efe1" : "#fff6dc"; ctx.fill();
+    }
+
+    ctx.beginPath(); ctx.arc(0, 0, R * 0.1, 0, TAU); ctx.fillStyle = rim; ctx.fill();
+    ctx.beginPath(); ctx.arc(0, 0, R * 0.055, 0, TAU); ctx.fillStyle = cue ? "#111111" : "#17503b"; ctx.fill();
+
+    ctx.beginPath();
+    ctx.moveTo(0, -Rw + R * 0.1);
+    ctx.lineTo(-R * 0.065, -R - R * 0.065);
+    ctx.lineTo(R * 0.065, -R - R * 0.065);
+    ctx.closePath();
+    ctx.fillStyle = cue ? "#c8102e" : "#b3242f"; ctx.fill();
+    ctx.lineWidth = S * 0.004; ctx.strokeStyle = cue ? "#f2c811" : "#f0d58a"; ctx.stroke();
+
+    ctx.restore();
+  }
+
+  /* ---------- result panel ---------- */
+  function renderResult(o) {
+    result.textContent = "";
+    const big = document.createElement("div");
+    big.className = "big" + (o.cls ? " " + o.cls : "");
+    if (o.dot) {
+      const d = document.createElement("span"); d.className = "dot"; d.style.background = o.dot;
+      big.append(d);
+    }
+    const t = document.createElement("span"); t.textContent = o.big;
+    big.append(t);
+    result.append(big);
+    if (o.sub) {
+      const s = document.createElement("div"); s.className = "sub"; s.textContent = o.sub;
+      result.append(s);
+    }
+    if (o.collect || o.gamble) {
+      const row = document.createElement("div"); row.className = "btn-row";
+      if (o.collect) {
+        const c = document.createElement("button");
+        c.type = "button"; c.className = "collect-btn"; c.textContent = "COLLECT";
+        c.addEventListener("click", collect);
+        row.append(c);
+      }
+      if (o.gamble) {
+        const g = document.createElement("button");
+        g.type = "button"; g.className = "gamble-btn"; g.textContent = "GAMBLE";
+        g.addEventListener("click", startGamble);
+        row.append(g);
+      }
+      result.append(row);
+    }
+  }
+
+  function setTitle() {
+    $("title").textContent = view === "gamble" ? "DOUBLE OR NOTHING" : titleText;
+  }
+  function switchView(v) {
+    if (v === view) return;
+    rots[view] = rot;
+    view = v;
+    rot = rots[v];
+    setTitle();
+    draw();
+  }
+
+  /* ---------- spinning ---------- */
+  function spin() {
+    if (spinning) return;
+    clearTimeout(backTimer); backTimer = null;
+    if (view === "gamble" && !gambling) switchView("main");
+    if (view === "main") pending = null;      // a new spin means the last player has moved on
+
+    spinning = true;
+    $("spin").disabled = true;
+    $("menuBtn").disabled = true;
+
+    const wi = pickIndex(slices());
+    const g = geometry()[wi];
+    const a = g.start + g.size * (0.12 + 0.76 * Math.random());
+    const desired = mod(-Math.PI / 2 - a, TAU);
+    const delta = mod(desired - rot, TAU);
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const start = rot;
+    const turns = Math.round(spinMs / 1000 * 0.8) + Math.floor(Math.random() * 3);
+    const target = rot + delta + TAU * turns;
+    const dur = reduce ? 900 : spinMs;
+    const t0 = performance.now();
+
+    result.textContent = view === "gamble" ? "Double or nothing\u2026 good luck!" : "Spinning\u2026";
+
+    function frame(now) {
+      const t = Math.min(1, (now - t0) / dur);
+      const ease = 1 - Math.pow(1 - t, 3);     // fast start, long slow crawl at the end
+      rot = start + (target - start) * ease;
+      draw();
+      if (t < 1) requestAnimationFrame(frame);
+      else finish(wi);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  function finish(wi) {
+    rot = mod(rot, TAU);
+    draw();
+    spinning = false;
+    $("spin").disabled = false;
+    $("menuBtn").disabled = false;
+    if (view === "main") {
+      const p = prizes[wi];
+      p.count++; totalSpins++;
+      pending = p.gamble ? { prize: p, mult: 1 } : null;
+      renderResult({
+        big: p.name || "(unnamed)", dot: p.color,
+        sub: p.gamble ? "Feeling lucky? No gamble no future!" : "",
+        collect: p.gamble, gamble: p.gamble
+      });
+    } else {
+      resolveGamble(wi);
+    }
+    syncObs();
+  }
+
+  function startGamble() {
+    if (!pending || pending.mult !== 1 || spinning) return;
+    gambling = pending.prize; pending = null; gambles++;
+    switchView("gamble");
+    renderResult({
+      big: (gambling.name || "Your prize") + " is on the line",
+      sub: "Win 2 \u00d7 " + (gambling.name || "prize") + ", or lose it. Press SPIN!"
+    });
+    syncObs();
+  }
+
+  function collect() {
+    if (!pending || spinning) return;
+    const c = pending; pending = null;
+    const text = (c.mult > 1 ? c.mult + " \u00d7 " : "") + (c.prize.name || "your prize");
+    renderResult({ big: text, dot: c.prize.color, sub: "Collected \u2713" });
+    showCelebration(text, c.prize.color);
+  }
+
+  function resolveGamble(wi) {
+    const p = gambling; gambling = null;
+    const name = (p && p.name) || "prize";
+    if (wi === 0) {
+      gambleWins++;
+      pending = p ? { prize: p, mult: 2 } : null;
+      renderResult({ big: "WINNER!", cls: "good", sub: "You win 2 \u00d7 " + name, collect: !!pending });
+    } else {
+      renderResult({ big: "LOSER", cls: "bad", sub: "You lose your " + name + "." });
+    }
+    backTimer = setTimeout(() => {
+      backTimer = null;
+      if (!spinning && view === "gamble") switchView("main");
+    }, 3500);
+  }
+
+  /* ---------- controls ---------- */
+  const LOCK_ON = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+  const LOCK_OFF = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 7.5-2"/></svg>';
+
+  function buildList(focusLast) {
+    list.textContent = "";
+    prizes.forEach(p => {
+      const li = document.createElement("li"); li.className = "row"; li.dataset.id = p.id;
+
+      const color = document.createElement("input"); color.type = "color"; color.value = p.color;
+      color.setAttribute("aria-label", "Colour for " + (p.name || "prize"));
+      color.addEventListener("input", () => { p.color = color.value; draw(); });
+
+      const name = document.createElement("input"); name.type = "text"; name.className = "name";
+      name.value = p.name; name.maxLength = 40; name.setAttribute("aria-label", "Prize name");
+      name.addEventListener("input", () => { p.name = name.value; draw(); });
+
+      const lock = document.createElement("button"); lock.type = "button"; lock.className = "icon-btn lock";
+      lock.setAttribute("aria-label", "Lock this percentage");
+      lock.addEventListener("click", () => { p.locked = !p.locked; syncWeights(); });
+
+      const del = document.createElement("button"); del.type = "button"; del.className = "icon-btn del";
+      del.textContent = "\u00d7"; del.setAttribute("aria-label", "Remove prize");
+      del.addEventListener("click", () => removePrize(p.id));
+
+      const slider = document.createElement("input"); slider.type = "range"; slider.className = "slider";
+      slider.min = 0; slider.max = 100; slider.step = 0.1;
+      slider.setAttribute("aria-label", "Chance for this prize");
+      slider.addEventListener("input", () => {
+        setWeight(prizes.findIndex(x => x.id === p.id), parseFloat(slider.value));
+        syncWeights(); draw();
+      });
+
+      const pct = document.createElement("label"); pct.className = "pct";
+      const num = document.createElement("input"); num.type = "number"; num.className = "num";
+      num.min = 0; num.max = 100; num.step = 0.1; num.setAttribute("aria-label", "Chance in percent");
+      num.addEventListener("input", () => {
+        const v = parseFloat(num.value);
+        if (isNaN(v)) return;
+        setWeight(prizes.findIndex(x => x.id === p.id), v);
+        syncWeights(num); draw();
+      });
+      num.addEventListener("change", () => syncWeights());
+      pct.append(num, "%");
+
+      const opt = document.createElement("label"); opt.className = "opt";
+      const cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = p.gamble;
+      cb.addEventListener("change", () => { p.gamble = cb.checked; });
+      opt.append(cb, "Allow gamble on this prize");
+
+      const obs = document.createElement("div"); obs.className = "obs";
+
+      li.append(color, name, lock, del, slider, pct, opt, obs);
+      list.append(li);
+    });
+    syncWeights(); syncObs(); draw();
+    if (focusLast) {
+      const inputs = list.querySelectorAll(".name");
+      const last = inputs[inputs.length - 1];
+      if (last) { last.focus(); last.select(); }
+    }
+  }
+
+  function syncWeights(skip) {
+    [...list.children].forEach((li, i) => {
+      const p = prizes[i];
+      const slider = li.querySelector(".slider"), num = li.querySelector(".num");
+      const lock = li.querySelector(".lock"), del = li.querySelector(".del");
+      slider.value = p.weight;
+      if (num !== skip) num.value = fmt(p.weight);
+      slider.disabled = num.disabled = p.locked;
+      lock.setAttribute("aria-pressed", String(p.locked));
+      lock.innerHTML = p.locked ? LOCK_ON : LOCK_OFF;
+      lock.title = p.locked ? "Unlock this percentage" : "Lock this percentage";
+      del.disabled = prizes.length <= MIN;
+    });
+    $("add").disabled = prizes.length >= MAX;
+  }
+
+  function syncObs() {
+    [...list.children].forEach((li, i) => {
+      const p = prizes[i];
+      li.querySelector(".obs").textContent = totalSpins
+        ? p.count.toLocaleString() + " wins \u00b7 " + fmt(100 * p.count / totalSpins) + "% of spins"
+        : "";
+    });
+    const bits = [];
+    if (totalSpins) bits.push(totalSpins.toLocaleString() + " spins counted");
+    if (gambles) bits.push(gambles + (gambles === 1 ? " gamble" : " gambles") + " (" + gambleWins + " won)");
+    $("spinCount").textContent = bits.join(" \u00b7 ");
+  }
+
+  function addPrize() {
+    if (prizes.length >= MAX) return;
+    const n = prizes.length;
+    prizes.push(make("Prize " + (n + 1), 0, nextColor()));
+    setWeight(prizes.length - 1, 100 / (n + 1));
+    buildList(true);
+  }
+
+  function removePrize(id) {
+    if (prizes.length <= MIN) return;
+    prizes = prizes.filter(p => p.id !== id);
+    normalise();
+    buildList();
+  }
+
+  $("add").addEventListener("click", addPrize);
+  $("spin").addEventListener("click", spin);
+  $("equalise").addEventListener("click", () => {
+    prizes.forEach(p => { p.locked = false; p.weight = 100 / prizes.length; });
+    syncWeights(); draw();
+  });
+  $("simulate").addEventListener("click", () => {
+    for (let k = 0; k < 1000; k++) prizes[pickIndex(prizes)].count++;
+    totalSpins += 1000;
+    syncObs();
+  });
+  $("reset").addEventListener("click", () => {
+    prizes.forEach(p => p.count = 0);
+    totalSpins = 0; gambles = 0; gambleWins = 0;
+    clearTimeout(backTimer); backTimer = null;
+    pending = null; gambling = null;
+    if (view === "gamble") switchView("main");
+    syncObs();
+    result.textContent = "Press Spin to play.";
+  });
+  document.querySelectorAll('input[name="mode"]').forEach(r =>
+    r.addEventListener("change", () => { mode = r.value; draw(); }));
+  document.querySelectorAll('input[name="len"]').forEach(r =>
+    r.addEventListener("change", () => { spinMs = parseInt(r.value, 10); }));
+
+  /* ---------- celebration ---------- */
+  const celEl = $("celebrate"), fx = $("fx"), fctx = fx.getContext("2d");
+  const FX_COLORS = ["#f2c811","#ff4d5e","#5ee08a","#59b3ff","#ffffff","#ff9f43","#c77dff"];
+  let particles = [], fxRaf = 0, nextBurst = 0;
+
+  function fxSize() {
+    const dpr = window.devicePixelRatio || 1;
+    fx.width = Math.round(window.innerWidth * dpr);
+    fx.height = Math.round(window.innerHeight * dpr);
+    fctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function burst(x, y) {
+    const main = FX_COLORS[Math.floor(Math.random() * FX_COLORS.length)];
+    const n = 70 + Math.floor(Math.random() * 40);
+    for (let i = 0; i < n; i++) {
+      const a = Math.random() * TAU, sp = 1.5 + Math.random() * 5;
+      particles.push({
+        x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 1,
+        decay: 0.009 + Math.random() * 0.012, size: 1.5 + Math.random() * 2,
+        color: Math.random() < 0.75 ? main : "#ffffff"
+      });
+    }
+  }
+  function fxFrame(now) {
+    const w = window.innerWidth, h = window.innerHeight;
+    fctx.globalCompositeOperation = "destination-out";
+    fctx.fillStyle = "rgba(0,0,0,0.22)";
+    fctx.fillRect(0, 0, w, h);
+    fctx.globalCompositeOperation = "lighter";
+    if (now > nextBurst) {
+      burst(w * (0.15 + Math.random() * 0.7), h * (0.12 + Math.random() * 0.4));
+      nextBurst = now + 350 + Math.random() * 500;
+    }
+    particles = particles.filter(p => p.life > 0);
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy; p.vy += 0.05; p.vx *= 0.99; p.vy *= 0.99; p.life -= p.decay;
+      fctx.globalAlpha = Math.max(0, p.life);
+      fctx.fillStyle = p.color;
+      fctx.beginPath(); fctx.arc(p.x, p.y, p.size, 0, TAU); fctx.fill();
+    });
+    fctx.globalAlpha = 1;
+    fxRaf = requestAnimationFrame(fxFrame);
+  }
+  function showCelebration(text, color) {
+    const prize = $("celPrize");
+    prize.textContent = "";
+    const d = document.createElement("span"); d.className = "dot"; d.style.background = color || "#f2c811";
+    const t = document.createElement("span"); t.textContent = text;
+    prize.append(d, t);
+    celEl.classList.add("show");
+    particles = [];
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    fx.style.display = reduce ? "none" : "block";
+    cancelAnimationFrame(fxRaf);
+    if (!reduce) {
+      fxSize();
+      const w = window.innerWidth, h = window.innerHeight;
+      burst(w * 0.25, h * 0.25); burst(w * 0.75, h * 0.3); burst(w * 0.5, h * 0.18);
+      nextBurst = performance.now() + 500;
+      fxRaf = requestAnimationFrame(fxFrame);
+    }
+    $("celDone").focus();
+  }
+  function closeCelebration() {
+    celEl.classList.remove("show");
+    cancelAnimationFrame(fxRaf);
+    fctx.setTransform(1, 0, 0, 1, 0, 0);
+    fctx.clearRect(0, 0, fx.width, fx.height);
+    particles = [];
+    $("spin").focus();
+  }
+  $("celDone").addEventListener("click", closeCelebration);
+  celEl.addEventListener("click", e => { if (!e.target.closest(".cel-card")) closeCelebration(); });
+  window.addEventListener("resize", () => { if (celEl.classList.contains("show")) fxSize(); });
+
+  /* ---------- PIN ---------- */
+  const PIN_KEY = "cueClubWheelPin";
+  let memPin = null;
+  function loadPin() {
+    try { const v = localStorage.getItem(PIN_KEY); if (v) return v; } catch (e) {}
+    return memPin;
+  }
+  function savePin(h) {
+    memPin = h;
+    try { localStorage.setItem(PIN_KEY, h); } catch (e) {}
+  }
+  function hashPin(p) {
+    let h = 5381;
+    const s = "cueclub:" + p;
+    for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) >>> 0;
+    return String(h);
+  }
+
+  const pinEl = $("pin"), pinTitle = $("pinTitle"), pinMsg = $("pinMsg"), pinDots = $("pinDots"), pinKeys = $("pinKeys");
+  const pin = { mode: "enter", buf: "", first: "", cb: null, fails: 0, lockUntil: 0 };
+
+  for (let i = 0; i < 4; i++) { const d = document.createElement("span"); d.className = "pdot"; pinDots.append(d); }
+  ["1","2","3","4","5","6","7","8","9","cancel","0","del"].forEach(k => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "key" + (k === "cancel" || k === "del" ? " fn" : "");
+    b.textContent = k === "cancel" ? "Cancel" : k === "del" ? "Delete" : k;
+    b.addEventListener("click", () => {
+      if (k === "cancel") pinClose();
+      else if (k === "del") { pin.buf = pin.buf.slice(0, -1); pinRender(); }
+      else pinPress(k);
+    });
+    pinKeys.append(b);
+  });
+
+  function pinRender(msg) {
+    pinTitle.textContent = pin.mode === "enter" ? "Enter PIN" : pin.mode === "create" ? "Create a PIN" : "Confirm PIN";
+    if (msg !== undefined) pinMsg.textContent = msg;
+    else pinMsg.textContent = pin.mode === "create" ? "Choose 4 digits to protect the odds menu"
+                            : pin.mode === "confirm" ? "Enter it again" : "";
+    [...pinDots.children].forEach((d, i) => d.classList.toggle("on", i < pin.buf.length));
+  }
+  function askPin(m, cb) {
+    pin.mode = m; pin.cb = cb; pin.buf = ""; pin.first = "";
+    pinRender();
+    pinEl.classList.add("show");
+  }
+  function pinClose() {
+    pinEl.classList.remove("show");
+    pin.buf = "";
+    (drawer.classList.contains("open") ? $("closeBtn") : menuBtn).focus();
+  }
+  function pinWrong(msg) {
+    pin.buf = "";
+    pinRender(msg);
+    pinDots.classList.remove("shake"); void pinDots.offsetWidth; pinDots.classList.add("shake");
+  }
+  function pinPress(d) {
+    if (Date.now() < pin.lockUntil) {
+      pinRender("Too many tries. Wait " + Math.ceil((pin.lockUntil - Date.now()) / 1000) + "s");
+      return;
+    }
+    if (pin.buf.length >= 4) return;
+    pin.buf += d;
+    pinRender();
+    if (pin.buf.length === 4) setTimeout(pinCheck, 120);
+  }
+  function pinCheck() {
+    if (pin.buf.length < 4) return;
+    if (pin.mode === "enter") {
+      if (hashPin(pin.buf) === loadPin()) {
+        pin.fails = 0; const cb = pin.cb; pinClose(); if (cb) cb();
+      } else {
+        pin.fails++;
+        if (pin.fails >= 5) { pin.fails = 0; pin.lockUntil = Date.now() + 30000; pinWrong("Too many tries. Wait 30s"); }
+        else pinWrong("Wrong PIN");
+      }
+    } else if (pin.mode === "create") {
+      pin.first = pin.buf; pin.buf = ""; pin.mode = "confirm"; pinRender();
+    } else {
+      if (pin.buf === pin.first) {
+        savePin(hashPin(pin.first));
+        const cb = pin.cb; pinClose(); if (cb) cb();
+      } else {
+        pin.mode = "create"; pin.first = "";
+        pinWrong("PINs didn't match. Start again");
+      }
+    }
+  }
+
+  /* ---------- menu drawer ---------- */
+  const drawer = $("drawer"), backdrop = $("backdrop"), menuBtn = $("menuBtn");
+  function setDrawer(open) {
+    drawer.classList.toggle("open", open);
+    backdrop.classList.toggle("show", open);
+    drawer.inert = !open;
+    menuBtn.setAttribute("aria-expanded", String(open));
+    (open ? $("closeBtn") : menuBtn).focus();
+  }
+  menuBtn.addEventListener("click", () => {
+    if (spinning) return;
+    askPin(loadPin() ? "enter" : "create", () => setDrawer(true));
+  });
+  $("closeBtn").addEventListener("click", () => setDrawer(false));
+  backdrop.addEventListener("click", () => setDrawer(false));
+  $("changePin").addEventListener("click", () => askPin("create", null));
+  document.addEventListener("keydown", e => {
+    if (celEl.classList.contains("show")) {
+      if (e.key === "Escape" || e.key === "Enter") closeCelebration();
+      return;
+    }
+    if (pinEl.classList.contains("show")) {
+      if (/^[0-9]$/.test(e.key)) pinPress(e.key);
+      else if (e.key === "Backspace") { pin.buf = pin.buf.slice(0, -1); pinRender(); }
+      else if (e.key === "Escape") pinClose();
+      return;
+    }
+    if (e.key === "Escape" && drawer.classList.contains("open")) setDrawer(false);
+  });
+  $("titleInput").addEventListener("input", e => {
+    titleText = e.target.value;
+    setTitle();
+    document.title = titleText || "Prize wheel";
+  });
+
+  /* ---------- theme ---------- */
+  const THEME_KEY = "cueClubWheelTheme";
+  function setThemeMeta() {
+    const m = document.querySelector('meta[name="theme-color"]');
+    if (m) m.setAttribute("content", getComputedStyle(document.documentElement).getPropertyValue("--bg").trim());
+  }
+  function applyTheme(th) {
+    document.documentElement.setAttribute("data-theme", th);
+    try { localStorage.setItem(THEME_KEY, th); } catch (e) {}
+    setThemeMeta();
+    draw();
+  }
+  document.querySelectorAll('input[name="theme"]').forEach(r => {
+    r.checked = r.value === (document.documentElement.getAttribute("data-theme") || "auto");
+    r.addEventListener("change", () => applyTheme(r.value));
+  });
+  try {
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    (mq.addEventListener ? mq.addEventListener.bind(mq, "change") : mq.addListener.bind(mq))(setThemeMeta);
+  } catch (e) {}
+  setThemeMeta();
+
+  new ResizeObserver(resize).observe(canvas);
+  result.textContent = "Press Spin to play.";
+  buildList();
+  resize();
+})();
+</script>
+</body>
+</html>
