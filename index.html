@@ -415,8 +415,9 @@
     const free = PALETTE.find(c => !used.has(c));
     return free || PALETTE[uid % PALETTE.length];
   }
-
-  let prizes = Array.from({ length: 15 }, (_, k) => make("Prize " + (k + 1), 100 / 15, PALETTE[k]));
+  
+  const NAMES = ["Free Pint", "Free Snack", "Tounament Ticket", "No Prize", "Spin Again", "£50 Cash", "£100 Flip", "JACKPOT!!!", "£25 Cash", "Rake Free (1 hour)"]
+  let prizes = NAMES.map((n, k) => make(n, 100 / NAMES.length, PALETTE[k]));
 
   let mode = "equal";
   let view = "main";               // "main" prize wheel or "gamble" 50/50 wheel
