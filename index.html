@@ -395,11 +395,18 @@
 <script>
 (function () {
   const TAU = Math.PI * 2;
-  const MAX = 24, MIN = 2;
+  const MAX = 60, MIN = 2;
   const PALETTE = ["#c8102e","#e8731a","#f2c811","#8fbf2a","#1f9d55","#0e8f8a",
                    "#1fa5d6","#2f5da8","#4b3fa8","#7a3e8e","#c74b9a","#e88aa8",
                    "#7b4a1e","#5d6d7e","#2b2b2b","#ff6f61","#3d8b37","#00b3b3",
                    "#6c5ce7","#d35400","#16a085","#b8860b","#8e44ad","#2c3e50"];
+  function hsl(h, s, l) {
+    s /= 100; l /= 100;
+    const k = n => (n + h / 30) % 12, a = s * Math.min(l, 1 - l);
+    const f = n => Math.round(255 * (l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)))));
+    return "#" + [f(0), f(8), f(4)].map(v => v.toString(16).padStart(2, "0")).join("");
+  }
+  for (let i = 0; PALETTE.length < 60; i++) PALETTE.push(hsl((i * 137.508 + 20) % 360, 62, i % 2 ? 40 : 54));
   const FONT = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
   const GAMBLE_SLICES = [
     { name: "WINNER", color: "#2e7d5b", weight: 50 },
@@ -416,7 +423,7 @@
     return free || PALETTE[uid % PALETTE.length];
   }
   
-  const NAMES = ["ACE of HEARTS", "ACE of CLUBS", "ACE of DIAMONDS", "ACE of SPADES", "DUECE of HEARTS", "DUECE of CLUBS", "DUECE of DIAMONDS", "DUECE of SAPDES", "THREE of HEARTS", "THREE of CLUBS", "THREE of DIAMONDS", "THREE of SPADES", "FOUR of HEARTS", "FOUR of CLUBS", "FOUR of DIAMONDS", "FOUR of SPADES", "FIVE of HEARTS", "FIVE of CLUBS", "FIVE of DIAMONDS", "FIVE of SPADES", "SIX of HEARTS", "SIX of CLUBS", "SIX of DIAMONDS", "SIX of SPADES", "SEVEN of HEARTS", "SEVEN of CLUBS", "SEVEN of DIAMONDS", "SEVEN of SPADES", "EIGHT of HEARTS", "EIGHT of CLUBS", "EIGHT of DIAMONDS", "EIGHT of SPADES", "NINE of HEARTS", "NINE of CLUBS", "NINE of DIAMONDS", "NINE of SPADES", TEN of HEARTS", "TEN of CLUBS", TEN of DIAMONDS", TEN of SPADES", "JACK of HEARTS", "JACK of CLUBS", "JACK of DIAMONDS", JACK of SPADES", "QUEEN of HEARTS", "QUEEN of CLUBS", "QUEEN of DIAMONDS", "QUEEN of SPADES", "KING of HEARTS", "KING of CLUBS", "KING of DIAMONDS", "KING of SPADES"]
+  const NAMES = ["ACE of HEARTS", "ACE of CLUBS", "ACE of DIAMONDS", "ACE of SPADES", "DEUCE of HEARTS", "DEUCE of CLUBS", "DEUCE of DIAMONDS", "DEUCE of SPADES", "THREE of HEARTS", "THREE of CLUBS", "THREE of DIAMONDS", "THREE of SPADES", "FOUR of HEARTS", "FOUR of CLUBS", "FOUR of DIAMONDS", "FOUR of SPADES", "FIVE of HEARTS", "FIVE of CLUBS", "FIVE of DIAMONDS", "FIVE of SPADES", "SIX of HEARTS", "SIX of CLUBS", "SIX of DIAMONDS", "SIX of SPADES", "SEVEN of HEARTS", "SEVEN of CLUBS", "SEVEN of DIAMONDS", "SEVEN of SPADES", "EIGHT of HEARTS", "EIGHT of CLUBS", "EIGHT of DIAMONDS", "EIGHT of SPADES", "NINE of HEARTS", "NINE of CLUBS", "NINE of DIAMONDS", "NINE of SPADES", "TEN of HEARTS", "TEN of CLUBS", "TEN of DIAMONDS", "TEN of SPADES", "JACK of HEARTS", "JACK of CLUBS", "JACK of DIAMONDS", "JACK of SPADES", "QUEEN of HEARTS", "QUEEN of CLUBS", "QUEEN of DIAMONDS", "QUEEN of SPADES", "KING of HEARTS", "KING of CLUBS", "KING of DIAMONDS", "KING of SPADES"];
   let prizes = NAMES.map((n, k) => make(n, 100 / NAMES.length, PALETTE[k]));
 
   let mode = "equal";
@@ -502,6 +509,32 @@
     draw();
   }
 
+  const fitCache = new Map();
+  function fitText(name, size, Rw) {
+    const key = name + "|" + size.toFixed(4) + "|" + Math.round(Rw) + "|" + (view === "gamble" ? 1 : 0);
+    if (fitCache.has(key)) return fitCache.get(key);
+    if (fitCache.size > 600) fitCache.clear();
+    const maxW = Rw * 0.66, outer = Rw * 0.93;
+    let f = Math.min(Rw * (view === "gamble" ? 0.17 : 0.11), Rw * size * 0.6);
+    let text = name, out = null;
+    if (f >= 6) {
+      ctx.font = `600 ${f}px ${FONT}`;
+      // shrink until it fits the length available and the narrowing slice width
+      while (f > 6) {
+        ctx.font = `600 ${f}px ${FONT}`;
+        const w = Math.min(ctx.measureText(text).width, maxW);
+        if (ctx.measureText(text).width <= maxW && f <= 0.8 * size * (outer - w)) break;
+        f -= 0.5;
+      }
+      ctx.font = `600 ${f}px ${FONT}`;
+      while (text.length > 1 && ctx.measureText(text).width > maxW) text = text.slice(0, -1);
+      if (text !== name && text.length) text = text.trimEnd() + "\u2026";
+      out = { f, text };
+    }
+    fitCache.set(key, out);
+    return out;
+  }
+
   function draw() {
     const S = canvas.width;
     if (!S) return;
@@ -528,19 +561,14 @@
       ctx.fillStyle = p.color; ctx.fill();
       ctx.lineWidth = Math.max(1, S * 0.003); ctx.strokeStyle = "rgba(255,255,255,.55)"; ctx.stroke();
 
-      let f = Math.min(Rw * (view === "gamble" ? 0.17 : 0.11), Rw * 0.6 * g.size * 0.55);
-      if (f < 8) return;
+      const lay = fitText(p.name || "", g.size, Rw);
+      if (!lay) return;
       ctx.save();
       ctx.rotate(rot + g.start + g.size / 2);
       ctx.fillStyle = textOn(p.color);
       ctx.textAlign = "right"; ctx.textBaseline = "middle";
-      const maxW = Rw * 0.66;
-      let text = p.name || "";
-      ctx.font = `600 ${f}px ${FONT}`;
-      while (ctx.measureText(text).width > maxW && f > 9) { f -= 1; ctx.font = `600 ${f}px ${FONT}`; }
-      while (text.length > 1 && ctx.measureText(text).width > maxW) text = text.slice(0, -1);
-      if (text !== p.name && text.length) text = text.trimEnd() + "\u2026";
-      ctx.fillText(text, Rw - Rw * 0.07, 0);
+      ctx.font = `600 ${lay.f}px ${FONT}`;
+      ctx.fillText(lay.text, Rw - Rw * 0.07, 0);
       ctx.restore();
     });
 
