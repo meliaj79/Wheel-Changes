@@ -416,7 +416,7 @@
     return free || PALETTE[uid % PALETTE.length];
   }
   
-  const NAMES = ["Free Pint", "Free Snack", "Tounament Ticket", "No Prize", "Spin Again", "£50 Cash", "£100 Flip", "JACKPOT!!!", "£25 Cash", "Rake Free (1 hour)"]
+  const NAMES = ["ACE of HEARTS", "ACE of CLUBS", "ACE of DIAMONDS", "ACE of SPADES", "DUECE of HEARTS", "DUECE of CLUBS", "DUECE of DIAMONDS", "DUECE of SAPDES", "THREE of HEARTS", "THREE of CLUBS", "THREE of DIAMONDS", "THREE of SPADES", "FOUR of HEARTS", "FOUR of CLUBS", "FOUR of DIAMONDS", "FOUR of SPADES", "FIVE of HEARTS", "FIVE of CLUBS", "FIVE of DIAMONDS", "FIVE of SPADES", "SIX of HEARTS", "SIX of CLUBS", "SIX of DIAMONDS", "SIX of SPADES", "SEVEN of HEARTS", "SEVEN of CLUBS", "SEVEN of DIAMONDS", "SEVEN of SPADES", "EIGHT of HEARTS", "EIGHT of CLUBS", "EIGHT of DIAMONDS", "EIGHT of SPADES", "NINE of HEARTS", "NINE of CLUBS", "NINE of DIAMONDS", "NINE of SPADES", TEN of HEARTS", "TEN of CLUBS", TEN of DIAMONDS", TEN of SPADES", "JACK of HEARTS", "JACK of CLUBS", "JACK of DIAMONDS", JACK of SPADES", "QUEEN of HEARTS", "QUEEN of CLUBS", "QUEEN of DIAMONDS", "QUEEN of SPADES", "KING of HEARTS", "KING of CLUBS", "KING of DIAMONDS", "KING of SPADES"]
   let prizes = NAMES.map((n, k) => make(n, 100 / NAMES.length, PALETTE[k]));
 
   let mode = "equal";
