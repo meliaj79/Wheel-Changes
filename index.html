@@ -6,6 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Prize wheel">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#e4ebe5">
 <script>try{var t=localStorage.getItem("cueClubWheelTheme");if(t==="light"||t==="dark"||t==="cue"||t==="auto")document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
 <title>Prize wheel</title>
@@ -29,6 +30,7 @@
     --bad: #c8102e;
     --brand-filter: none;
     --title-shadow: none;
+    --status: #17503b;
   }
   :root[data-theme="dark"] {
     color-scheme: dark;
@@ -46,6 +48,7 @@
     --good: #6fe3a0;
     --bad: #ff7b8a;
     --brand-filter: drop-shadow(0 0 1.5px rgba(255,255,255,.8));
+    --status: transparent;
   }
   @media (prefers-color-scheme: dark) {
     :root[data-theme="auto"] {
@@ -64,6 +67,7 @@
       --good: #6fe3a0;
       --bad: #ff7b8a;
       --brand-filter: drop-shadow(0 0 1.5px rgba(255,255,255,.8));
+      --status: transparent;
     }
   }
   /* Cue Club: snooker-table green, black, chalk white, yellow and red balls */
@@ -85,6 +89,7 @@
     --bad: #ff6b7a;
     --brand-filter: drop-shadow(0 0 1.5px rgba(255,255,255,.85));
     --title-shadow: 0 2px 10px rgba(0,0,0,.45);
+    --status: transparent;
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html, body { margin: 0; height: 100%; overflow: hidden; overscroll-behavior: none; }
@@ -109,6 +114,10 @@
     letter-spacing: 0.01em;
     text-shadow: var(--title-shadow);
   }
+  .statusbar {
+    position: fixed; top: 0; left: 0; right: 0; height: env(safe-area-inset-top, 0px);
+    background: var(--status); z-index: 40; pointer-events: none;
+  }
   .page {
     max-width: 760px; margin: 0 auto; height: 100%; overflow: hidden;
     padding: max(80px, calc(env(safe-area-inset-top) + 66px)) 20px max(16px, env(safe-area-inset-bottom));
@@ -118,8 +127,8 @@
 
   .stage { display: flex; flex-direction: column; align-items: center; gap: 14px; }
   .wheel-wrap {
-    width: min(100%, 640px, max(180px, calc(100vh - 400px)));
-    width: min(100%, 640px, max(180px, calc(100dvh - 400px)));
+    width: min(100%, 640px, max(180px, calc(100vh - max(80px, calc(env(safe-area-inset-top, 0px) + 66px)) - max(16px, env(safe-area-inset-bottom, 0px)) - 304px)));
+    width: min(100%, 640px, max(180px, calc(100dvh - max(80px, calc(env(safe-area-inset-top, 0px) + 66px)) - max(16px, env(safe-area-inset-bottom, 0px)) - 304px)));
     aspect-ratio: 1;
   }
   canvas { width: 100%; height: 100%; display: block; filter: drop-shadow(0 14px 22px rgba(0,0,0,.35)); }
@@ -141,7 +150,7 @@
   .result .big { display: inline-flex; align-items: center; gap: 10px; font-size: 1.5rem; font-weight: 800; }
   .result .big.good { color: var(--good); }
   .result .big.bad { color: var(--bad); }
-  .result .dot { width: 14px; height: 14px; border-radius: 50%; flex: none; }
+  .result .dot { width: 14px; height: 14px; border-radius: 50%; flex: none; border: 1.5px solid rgba(128,128,128,.7); }
   .result .sub { color: var(--muted); font-size: .95rem; }
   .btn-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
   .gamble-btn, .collect-btn {
@@ -179,7 +188,7 @@
     display: flex; align-items: center; justify-content: center; gap: 10px;
     font-size: 2rem; font-weight: 800; line-height: 1.15; margin: 4px 0 18px; overflow-wrap: anywhere;
   }
-  .cel-prize .dot { width: 16px; height: 16px; border-radius: 50%; flex: none; }
+  .cel-prize .dot { width: 16px; height: 16px; border-radius: 50%; flex: none; border: 1.5px solid rgba(128,128,128,.7); }
   .cel-done {
     font: inherit; font-weight: 700; font-size: 1.1rem; letter-spacing: .06em; padding: 12px 44px;
     border: 0; border-radius: 999px; cursor: pointer; background: var(--btn-bg); color: var(--btn-ink);
@@ -305,6 +314,7 @@
 </style>
 </head>
 <body>
+<div class="statusbar" aria-hidden="true"></div>
 <button id="menuBtn" class="menu-btn" type="button" aria-label="Open settings" aria-expanded="false" aria-controls="drawer">
   <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
 </button>
@@ -415,7 +425,7 @@
 
   let uid = 0;
   const make = (name, weight, color) => ({
-    id: ++uid, name, weight, color, locked: false, gamble: true, bad: false, count: 0
+    id: ++uid, name, weight, color, locked: false, gamble: false, bad: true, count: 0
   });
   function nextColor() {
     const used = new Set(prizes.map(p => p.color));
@@ -424,7 +434,19 @@
   }
   
   const NAMES = ["ACE of HEARTS", "ACE of CLUBS", "ACE of DIAMONDS", "ACE of SPADES", "DEUCE of HEARTS", "DEUCE of CLUBS", "DEUCE of DIAMONDS", "DEUCE of SPADES", "THREE of HEARTS", "THREE of CLUBS", "THREE of DIAMONDS", "THREE of SPADES", "FOUR of HEARTS", "FOUR of CLUBS", "FOUR of DIAMONDS", "FOUR of SPADES", "FIVE of HEARTS", "FIVE of CLUBS", "FIVE of DIAMONDS", "FIVE of SPADES", "SIX of HEARTS", "SIX of CLUBS", "SIX of DIAMONDS", "SIX of SPADES", "SEVEN of HEARTS", "SEVEN of CLUBS", "SEVEN of DIAMONDS", "SEVEN of SPADES", "EIGHT of HEARTS", "EIGHT of CLUBS", "EIGHT of DIAMONDS", "EIGHT of SPADES", "NINE of HEARTS", "NINE of CLUBS", "NINE of DIAMONDS", "NINE of SPADES", "TEN of HEARTS", "TEN of CLUBS", "TEN of DIAMONDS", "TEN of SPADES", "JACK of HEARTS", "JACK of CLUBS", "JACK of DIAMONDS", "JACK of SPADES", "QUEEN of HEARTS", "QUEEN of CLUBS", "QUEEN of DIAMONDS", "QUEEN of SPADES", "KING of HEARTS", "KING of CLUBS", "KING of DIAMONDS", "KING of SPADES"];
-  let prizes = NAMES.map((n, k) => make(n, 100 / NAMES.length, PALETTE[k]));
+  // Colour rules: the first match wins, so the jackpot card is listed before DIAMONDS
+  const SUIT_COLORS = [["SEVEN of DIAMONDS", "#FFD700"], ["HEARTS", "#800517"], ["CLUBS", "#1A2421"],
+                       ["DIAMONDS", "#151B54"], ["SPADES", "#000000"]];
+  function colorFor(name, k) {
+    const u = name.toUpperCase();
+    for (const [word, col] of SUIT_COLORS) if (u.includes(word.toUpperCase())) return col;
+    return PALETTE[k];
+  }
+  let prizes = NAMES.map((n, k) => {
+    const p = make(n, 100 / NAMES.length, colorFor(n, k));
+    if (n === "SEVEN of DIAMONDS") p.bad = false;   // the jackpot says CONGRATULATIONS!
+    return p;
+  });
 
   let mode = "equal";
   let view = "main";               // "main" prize wheel or "gamble" 50/50 wheel
