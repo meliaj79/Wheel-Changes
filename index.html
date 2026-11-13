@@ -479,8 +479,8 @@
   
   const NAMES = ["ACE of HEARTS", "ACE of CLUBS", "ACE of DIAMONDS", "ACE of SPADES", "DEUCE of HEARTS", "DEUCE of CLUBS", "DEUCE of DIAMONDS", "DEUCE of SPADES", "THREE of HEARTS", "THREE of CLUBS", "THREE of DIAMONDS", "THREE of SPADES", "FOUR of HEARTS", "FOUR of CLUBS", "FOUR of DIAMONDS", "FOUR of SPADES", "FIVE of HEARTS", "FIVE of CLUBS", "FIVE of DIAMONDS", "FIVE of SPADES", "SIX of HEARTS", "SIX of CLUBS", "SIX of DIAMONDS", "SIX of SPADES", "SEVEN of HEARTS", "SEVEN of CLUBS", "SEVEN of DIAMONDS", "SEVEN of SPADES", "EIGHT of HEARTS", "EIGHT of CLUBS", "EIGHT of DIAMONDS", "EIGHT of SPADES", "NINE of HEARTS", "NINE of CLUBS", "NINE of DIAMONDS", "NINE of SPADES", "TEN of HEARTS", "TEN of CLUBS", "TEN of DIAMONDS", "TEN of SPADES", "JACK of HEARTS", "JACK of CLUBS", "JACK of DIAMONDS", "JACK of SPADES", "QUEEN of HEARTS", "QUEEN of CLUBS", "QUEEN of DIAMONDS", "QUEEN of SPADES", "KING of HEARTS", "KING of CLUBS", "KING of DIAMONDS", "KING of SPADES"];
   // Colour rules: the first match wins, so the jackpot card is listed before DIAMONDS
-  const SUIT_COLORS = [["SEVEN of DIAMONDS", "#FFD700"], ["HEARTS", "#800517"], ["CLUBS", "#1A2421"],
-                       ["DIAMONDS", "#151B54"], ["SPADES", "#000000"]];
+  const SUIT_COLORS = [["SEVEN of DIAMONDS", "#FFD700"], ["HEARTS", "#800517"], ["CLUBS", "#0B6623"],
+                       ["DIAMONDS", "#0000FF"], ["SPADES", "#000000"]];
   function colorFor(name, k) {
     const u = name.toUpperCase();
     for (const [word, col] of SUIT_COLORS) if (u.includes(word.toUpperCase())) return col;
