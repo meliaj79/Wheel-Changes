@@ -131,7 +131,8 @@
     width: min(100%, 640px, max(180px, calc(100dvh - max(80px, calc(env(safe-area-inset-top, 0px) + 66px)) - max(16px, env(safe-area-inset-bottom, 0px)) - 304px)));
     aspect-ratio: 1;
   }
-  canvas { width: 100%; height: 100%; display: block; filter: drop-shadow(0 14px 22px rgba(0,0,0,.35)); }
+  canvas { width: 100%; height: 100%; display: block; filter: drop-shadow(0 14px 22px rgba(0,0,0,.35)); touch-action: none; cursor: grab; }
+  canvas.grabbing { cursor: grabbing; }
   .spin {
     font: inherit; font-weight: 700; font-size: 1.25rem; letter-spacing: .04em;
     height: 58px; padding: 0 44px; border: 0; border-radius: 999px; cursor: pointer;
@@ -354,7 +355,7 @@
 <div class="page">
   <header><h1 id="title">Prize wheel</h1></header>
   <section class="stage" aria-label="Wheel">
-    <div class="wheel-wrap"><canvas id="wheel" role="img" aria-label="Prize wheel"></canvas></div>
+    <div class="wheel-wrap"><canvas id="wheel" role="img" aria-label="Prize wheel. Drag and flick to spin"></canvas></div>
     <div class="actions">
       <button id="spin" class="spin" type="button">Spin</button>
       <button id="deckBtn" class="deck-btn" type="button" aria-label="Show the deck"><img alt="" src="data:image/webp;base64,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"></button>
@@ -875,8 +876,54 @@
     location.reload();
   });
 
+  /* ---------- drag the wheel, flick to spin ---------- */
+  const FLICK = 4;                           // radians per second needed to start a spin
+  let drag = null;
+  function canDrag() { return view === "main" && !spinning && deckLeft() > 0; }
+  function pointerAngle(e) {
+    const r = canvas.getBoundingClientRect();
+    return Math.atan2(e.clientY - (r.top + r.height / 2), e.clientX - (r.left + r.width / 2));
+  }
+  canvas.addEventListener("pointerdown", e => {
+    if (!canDrag() || drag) return;
+    e.preventDefault();
+    try { canvas.setPointerCapture(e.pointerId); } catch (err) {}
+    drag = { id: e.pointerId, last: pointerAngle(e), samples: [] };
+    canvas.classList.add("grabbing");
+  });
+  canvas.addEventListener("pointermove", e => {
+    if (!drag || e.pointerId !== drag.id) return;
+    const a = pointerAngle(e);
+    let d = a - drag.last;
+    if (d > Math.PI) d -= TAU; else if (d < -Math.PI) d += TAU;   // take the short way round
+    drag.last = a;
+    rot += d;
+    const now = performance.now();
+    drag.samples.push([now, d]);
+    drag.samples = drag.samples.filter(x => now - x[0] < 300);
+    draw();
+  });
+  function endDrag(e) {
+    if (!drag || e.pointerId !== drag.id) return;
+    const now = performance.now();
+    // speed over the last 100ms only, so a flick that pauses before letting go doesn't count
+    const omega = drag.samples.filter(x => now - x[0] <= 100).reduce((s, x) => s + x[1], 0) / 0.1;
+    drag = null;
+    canvas.classList.remove("grabbing");
+    rot = mod(rot, TAU);
+    draw();
+    if (Math.abs(omega) >= FLICK && canDrag()) {
+      const dir = omega < 0 ? -1 : 1;                              // flick backwards, wheel turns backwards
+      spin(Math.min(3, Math.floor(Math.abs(omega) / 8)), dir);     // harder flick, a few extra turns
+    }
+  }
+  canvas.addEventListener("pointerup", endDrag);
+  canvas.addEventListener("pointercancel", endDrag);
+
   /* ---------- spinning ---------- */
-  function spin() {
+  function spin(bonus, dir) {
+    const extra = typeof bonus === "number" ? bonus : 0;
+    const sign = dir === -1 ? -1 : 1;
     if (spinning) return;
     clearTimeout(backTimer); backTimer = null;
     clearTimeout(celTimer); celTimer = null;
@@ -895,11 +942,11 @@
     const g = geometry()[wi];
     const a = g.start + g.size * (0.12 + 0.76 * Math.random());
     const desired = mod(-Math.PI / 2 - a, TAU);
-    const delta = mod(desired - rot, TAU);
+    const delta = sign > 0 ? mod(desired - rot, TAU) : -mod(rot - desired, TAU);
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const start = rot;
-    const turns = Math.round(spinMs / 1000 * 0.8) + Math.floor(Math.random() * 3);
-    const target = rot + delta + TAU * turns;
+    const turns = Math.round(spinMs / 1000 * 0.8) + Math.floor(Math.random() * 3) + extra;
+    const target = rot + delta + sign * TAU * turns;
     const dur = reduce ? 900 : spinMs;
     const t0 = performance.now();
 
