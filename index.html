@@ -134,13 +134,47 @@
   canvas { width: 100%; height: 100%; display: block; filter: drop-shadow(0 14px 22px rgba(0,0,0,.35)); }
   .spin {
     font: inherit; font-weight: 700; font-size: 1.25rem; letter-spacing: .04em;
-    padding: 14px 64px; border: 0; border-radius: 999px; cursor: pointer;
+    padding: 14px 44px; border: 0; border-radius: 999px; cursor: pointer;
     background: var(--btn-bg); color: var(--btn-ink);
     box-shadow: 0 0 0 3px var(--ring), 0 8px 18px rgba(0,0,0,.25);
     transition: transform .08s ease;
   }
   .spin:active { transform: translateY(1px); }
   .spin:disabled { opacity: .55; cursor: not-allowed; }
+  .actions { display: flex; align-items: center; justify-content: center; gap: 12px; }
+  .deck-btn {
+    font: inherit; font-weight: 700; font-size: 1.05rem; letter-spacing: .03em;
+    padding: 12px 18px; border-radius: 999px; cursor: pointer;
+    background: transparent; color: var(--ink); border: 2px solid var(--ring);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .deck-btn:active { transform: translateY(1px); }
+  .deck-btn .n {
+    min-width: 26px; padding: 1px 7px; border-radius: 999px; font-size: .85rem; text-align: center;
+    background: var(--btn-bg); color: var(--btn-ink);
+  }
+  .deck {
+    position: fixed; inset: 0; z-index: 22; display: none; flex-direction: column;
+    background-color: var(--bg); background-image: var(--bg-image); background-size: cover; background-repeat: no-repeat;
+    padding: calc(env(safe-area-inset-top, 0px) + 12px) 14px max(14px, env(safe-area-inset-bottom));
+  }
+  .deck.show { display: flex; }
+  .deck-head { display: flex; justify-content: space-between; align-items: center; margin: 0 2px 10px; flex: none; }
+  .deck-head h2 { margin: 0; font-size: 1.25rem; font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; }
+  .deck-count { color: var(--muted); font-size: .92rem; }
+  .deck-grid {
+    flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(13, minmax(28px, 1fr)); gap: 6px; overflow-y: auto; overscroll-behavior: contain;
+  }
+  .dcard {
+    display: flex; align-items: center; justify-content: center; gap: .3em; background: #fffdf6;
+    border: 1px solid #cfc8b4; border-radius: 7px; font-weight: 800; font-size: clamp(.85rem, 2.5vh, 1.2rem);
+    line-height: 1; transition: opacity .2s;
+  }
+  .dcard.red { color: #c8102e; }
+  .dcard.blk { color: #111111; }
+  .dcard.gold { background: #fff3b8; border: 2px solid #FFD700; box-shadow: 0 0 10px rgba(255,215,0,.65); }
+  .dcard.out { opacity: .26; box-shadow: none; }
 
   .result {
     min-height: 140px; text-align: center; width: min(100%, 460px);
@@ -323,7 +357,10 @@
   <header><h1 id="title">Prize wheel</h1></header>
   <section class="stage" aria-label="Wheel">
     <div class="wheel-wrap"><canvas id="wheel" role="img" aria-label="Prize wheel"></canvas></div>
-    <button id="spin" class="spin" type="button">Spin</button>
+    <div class="actions">
+      <button id="spin" class="spin" type="button">Spin</button>
+      <button id="deckBtn" class="deck-btn" type="button" aria-label="Show the deck">Deck <span id="deckN" class="n">52</span></button>
+    </div>
     <div id="result" class="result" aria-live="polite"></div>
   </section>
 </div>
@@ -375,11 +412,20 @@
     <button id="add" class="btn primary" type="button">Add prize</button>
     <button id="simulate" class="btn" type="button">Test 1,000 spins</button>
     <button id="reset" class="btn" type="button">Clear results</button>
+    <button id="newDeck" class="btn" type="button">New deck</button>
     <button id="changePin" class="btn" type="button">Change PIN</button>
     <span id="spinCount" class="count"></span>
   </div>
-  <p class="note">Odds always add up to 100%. Moving one slider rescales the others, except locked ones. Use "Equal slices" so the wheel itself doesn't show the odds. The gamble wheel is always a fair 50/50. Untick "Allow gamble on this prize" and the pop up shows straight away with no buttons. Tick "Bad prize" and it says UNLUCKY! instead of CONGRATULATIONS!. Drag the dots on the left of a prize to change the wheel order. Prize settings reset when you close the page. Your PIN and theme are kept on this phone.</p>
+  <p class="note">Odds always add up to 100%. Moving one slider rescales the others, except locked ones. Use "Equal slices" so the wheel itself doesn't show the odds. The gamble wheel is always a fair 50/50. Untick "Allow gamble on this prize" and the pop up shows straight away with no buttons. Tick "Bad prize" and it says UNLUCKY! instead of CONGRATULATIONS!. Drag the dots on the left of a prize to change the wheel order. Cards that have been won leave the wheel on the next spin and show faded in the Deck tab. Tap New deck (twice) to put them all back. Prize settings reset when you close the page. Your PIN and theme are kept on this phone.</p>
 </aside>
+
+<div id="deck" class="deck" role="dialog" aria-modal="true" aria-labelledby="deckTitle">
+  <div class="deck-head">
+    <div><h2 id="deckTitle">The deck</h2><div id="deckCount" class="deck-count"></div></div>
+    <button id="deckClose" class="icon-btn" type="button" aria-label="Close the deck">&times;</button>
+  </div>
+  <div id="deckGrid" class="deck-grid" role="list"></div>
+</div>
 
 <div id="pin" class="pin" role="dialog" aria-modal="true" aria-labelledby="pinTitle">
   <div class="pin-card">
@@ -423,7 +469,7 @@
 
   let uid = 0;
   const make = (name, weight, color) => ({
-    id: ++uid, name, weight, color, locked: false, gamble: false, bad: true, count: 0
+    id: ++uid, name, weight, color, locked: false, gamble: false, bad: true, count: 0, out: false
   });
   function nextColor() {
     const used = new Set(prizes.map(p => p.color));
@@ -445,6 +491,34 @@
     if (n === "SEVEN of DIAMONDS") p.bad = false;   // the jackpot says CONGRATULATIONS!
     return p;
   });
+
+  /* ---------- deck tracking ---------- */
+  const RANK_WORDS = { ACE: 0, DEUCE: 1, TWO: 1, THREE: 2, FOUR: 3, FIVE: 4, SIX: 5, SEVEN: 6,
+                       EIGHT: 7, NINE: 8, TEN: 9, JACK: 10, QUEEN: 11, KING: 12 };
+  const RANK_SHORT = ["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
+  const RANK_LONG = ["Ace","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Jack","Queen","King"];
+  const SUIT_WORDS = { HEARTS: 0, HEART: 0, CLUBS: 1, CLUB: 1, DIAMONDS: 2, DIAMOND: 2, SPADES: 3, SPADE: 3 };
+  const SUIT_SYM = ["\u2665\uFE0E", "\u2663\uFE0E", "\u2666\uFE0E", "\u2660\uFE0E"];   // FE0E keeps them as plain text symbols, not emoji
+  const SUIT_LONG = ["hearts", "clubs", "diamonds", "spades"];
+  const JACKPOT = "6-2";                     // SEVEN of DIAMONDS
+  function cardKey(name) {
+    const u = (name || "").toUpperCase();
+    const r = u.match(/\b(ACE|DEUCE|TWO|THREE|FOUR|FIVE|SIX|SEVEN|EIGHT|NINE|TEN|JACK|QUEEN|KING)\b/);
+    const t = u.match(/\b(HEARTS?|CLUBS?|DIAMONDS?|SPADES?)\b/);
+    return r && t ? RANK_WORDS[r[1]] + "-" + SUIT_WORDS[t[1]] : null;
+  }
+  const DECK_KEY = "cueClubWheelDeck";
+  let memDeck = null;
+  const drawnStack = [];                     // cards already removed from the wheel
+  function loadDeck() {
+    try { const v = localStorage.getItem(DECK_KEY); if (v) { const a = JSON.parse(v); if (Array.isArray(a)) return a; } } catch (e) {}
+    return memDeck || [];
+  }
+  function saveDeck() {
+    const keys = drawnStack.map(d => d.key).concat(prizes.filter(p => p.out).map(p => cardKey(p.name)));
+    memDeck = keys;
+    try { localStorage.setItem(DECK_KEY, JSON.stringify(keys)); } catch (e) {}
+  }
 
   let mode = "equal";
   let view = "main";               // "main" prize wheel or "gamble" 50/50 wheel
@@ -663,7 +737,91 @@
     rot = rots[v];
     setTitle();
     draw();
+    syncSpin();
   }
+
+  /* ---------- deck: wheel removal, panel, spin state ---------- */
+  const deckLeft = () => prizes.filter(p => !p.out).length;
+  function syncSpin() {
+    const empty = view === "main" && !spinning && deckLeft() === 0;
+    $("spin").disabled = spinning || empty;
+    $("spin").textContent = empty ? "Deck empty" : "Spin";
+  }
+  function flushRemoval() {
+    const gone = prizes.filter(p => p.out);
+    if (!gone.length) return;
+    gone.forEach(p => {
+      drawnStack.push({ prize: p, key: cardKey(p.name), idx: prizes.indexOf(p), snap: prizes.map(q => [q.id, q.weight]) });
+      prizes.splice(prizes.indexOf(p), 1);
+      if (prizes.length) normalise();
+    });
+    buildList();
+    refreshDeck();
+    syncSpin();
+  }
+  function newDeck() {
+    if (spinning) return;
+    prizes.forEach(p => { p.out = false; });
+    while (drawnStack.length) {
+      const d = drawnStack.pop();
+      prizes.splice(Math.min(d.idx, prizes.length), 0, d.prize);
+      d.prize.out = false;
+      d.snap.forEach(([id, w]) => { const q = prizes.find(x => x.id === id); if (q) q.weight = w; });
+    }
+    saveDeck();
+    buildList();
+    refreshDeck();
+    syncSpin();
+    if (!pending && !spinning && view === "main") result.textContent = "New deck shuffled in. Press Spin to play.";
+  }
+  const deckEl = $("deck"), deckGrid = $("deckGrid");
+  function refreshDeck() {
+    const have = new Set(prizes.filter(p => !p.out).map(p => cardKey(p.name)));
+    let n = 0;
+    for (let r = 0; r < 13; r++) for (let s = 0; s < 4; s++) if (have.has(r + "-" + s)) n++;
+    $("deckN").textContent = n;
+    $("deckBtn").setAttribute("aria-label", "Show the deck. " + n + " of 52 cards left");
+    if (!deckEl.classList.contains("show")) return;
+    $("deckCount").textContent = n + " of 52 cards left";
+    deckGrid.textContent = "";
+    for (let r = 0; r < 13; r++) for (let s = 0; s < 4; s++) {
+      const k = r + "-" + s, inDeck = have.has(k);
+      const c = document.createElement("div");
+      c.className = "dcard " + (s === 0 || s === 2 ? "red" : "blk") + (k === JACKPOT ? " gold" : "") + (inDeck ? "" : " out");
+      c.setAttribute("role", "listitem");
+      c.setAttribute("aria-label", RANK_LONG[r] + " of " + SUIT_LONG[s] + (inDeck ? ", still in the deck" : ", already drawn"));
+      const a = document.createElement("span"); a.textContent = RANK_SHORT[r];
+      const b = document.createElement("span"); b.textContent = SUIT_SYM[s];
+      c.append(a, b);
+      deckGrid.append(c);
+    }
+  }
+  function openDeck() {
+    deckEl.classList.add("show");
+    refreshDeck();
+    $("deckClose").focus();
+  }
+  function closeDeck() {
+    deckEl.classList.remove("show");
+    $("deckBtn").focus();
+  }
+  $("deckBtn").addEventListener("click", openDeck);
+  $("deckClose").addEventListener("click", closeDeck);
+  let ndTimer = null;
+  function disarmNewDeck() {
+    clearTimeout(ndTimer);
+    const b = $("newDeck"); delete b.dataset.arm; b.textContent = "New deck";
+  }
+  $("newDeck").addEventListener("click", () => {
+    const b = $("newDeck");
+    if (!b.dataset.arm) {
+      b.dataset.arm = "1"; b.textContent = "Tap again to confirm";
+      ndTimer = setTimeout(disarmNewDeck, 3000);
+      return;
+    }
+    disarmNewDeck();
+    newDeck();
+  });
 
   /* ---------- spinning ---------- */
   function spin() {
@@ -671,7 +829,11 @@
     clearTimeout(backTimer); backTimer = null;
     clearTimeout(celTimer); celTimer = null;
     if (view === "gamble" && !gambling) switchView("main");
-    if (view === "main") pending = null;      // a new spin means the last player has moved on
+    if (view === "main") {
+      pending = null;                          // a new spin means the last player has moved on
+      flushRemoval();                          // cards won last time now leave the wheel
+      if (!prizes.length) { syncSpin(); return; }
+    }
 
     spinning = true;
     $("spin").disabled = true;
@@ -706,11 +868,11 @@
     rot = mod(rot, TAU);
     draw();
     spinning = false;
-    $("spin").disabled = false;
     $("menuBtn").disabled = false;
     if (view === "main") {
       const p = prizes[wi];
       p.count++; totalSpins++;
+      if (cardKey(p.name)) { p.out = true; saveDeck(); refreshDeck(); }
       pending = p.gamble ? { prize: p, mult: 1 } : null;
       renderResult({
         big: p.name || "(unnamed)", dot: p.color,
@@ -728,6 +890,7 @@
       resolveGamble(wi);
     }
     syncObs();
+    syncSpin();
   }
 
   function startGamble() {
@@ -795,7 +958,7 @@
 
       const name = document.createElement("input"); name.type = "text"; name.className = "name";
       name.value = p.name; name.maxLength = 40; name.setAttribute("aria-label", "Prize name");
-      name.addEventListener("input", () => { p.name = name.value; draw(); });
+      name.addEventListener("input", () => { p.name = name.value; draw(); refreshDeck(); });
 
       const lock = document.createElement("button"); lock.type = "button"; lock.className = "icon-btn lock";
       lock.setAttribute("aria-label", "Lock this percentage");
@@ -962,6 +1125,8 @@
     syncWeights(); draw();
   });
   $("simulate").addEventListener("click", () => {
+    flushRemoval();
+    if (!prizes.length) return;
     for (let k = 0; k < 1000; k++) prizes[pickIndex(prizes)].count++;
     totalSpins += 1000;
     syncObs();
@@ -1175,6 +1340,7 @@
       else if (e.key === "Escape") pinClose();
       return;
     }
+    if (e.key === "Escape" && deckEl.classList.contains("show")) { closeDeck(); return; }
     if (e.key === "Escape" && drawer.classList.contains("open")) setDrawer(false);
   });
   $("titleInput").addEventListener("input", e => {
@@ -1206,14 +1372,21 @@
   setThemeMeta();
 
   document.addEventListener("touchmove", e => {
-    if (!e.target.closest || !e.target.closest("#drawer")) e.preventDefault();
+    if (!e.target.closest || !e.target.closest("#drawer, #deck")) e.preventDefault();
   }, { passive: false });
   ["gesturestart", "gesturechange", "gestureend"].forEach(n =>
     document.addEventListener(n, e => e.preventDefault()));
 
   new ResizeObserver(resize).observe(canvas);
   result.textContent = "Press Spin to play.";
+  loadDeck().forEach(k => {
+    const p = prizes.find(x => !x.out && cardKey(x.name) === k);
+    if (p) p.out = true;
+  });
+  flushRemoval();
   buildList();
+  refreshDeck();
+  syncSpin();
   resize();
 })();
 </script>
