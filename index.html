@@ -1026,7 +1026,7 @@
   }
   function showCelebration(text, color, bad) {
     $("celTitle").textContent = bad ? "UNLUCKY!" : "CONGRATULATIONS!";
-    $("celSub").textContent = bad ? "You drawn the..." : "You won";
+    $("celSub").textContent = bad ? "You got" : "You won";
     celCard.classList.toggle("bad", !!bad);
     const prize = $("celPrize");
     prize.textContent = "";
