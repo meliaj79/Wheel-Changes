@@ -134,7 +134,7 @@
   canvas { width: 100%; height: 100%; display: block; filter: drop-shadow(0 14px 22px rgba(0,0,0,.35)); }
   .spin {
     font: inherit; font-weight: 700; font-size: 1.25rem; letter-spacing: .04em;
-    padding: 14px 44px; border: 0; border-radius: 999px; cursor: pointer;
+    height: 58px; padding: 0 44px; border: 0; border-radius: 999px; cursor: pointer;
     background: var(--btn-bg); color: var(--btn-ink);
     box-shadow: 0 0 0 3px var(--ring), 0 8px 18px rgba(0,0,0,.25);
     transition: transform .08s ease;
@@ -143,15 +143,13 @@
   .spin:disabled { opacity: .55; cursor: not-allowed; }
   .actions { display: flex; align-items: center; justify-content: center; gap: 12px; }
   .deck-btn {
-    font: inherit; font-weight: 700; font-size: 1.05rem; letter-spacing: .03em;
-    padding: 12px 18px; border-radius: 999px; cursor: pointer;
-    background: transparent; color: var(--ink); border: 2px solid var(--ring);
-    display: inline-flex; align-items: center; gap: 8px;
+    height: 58px; padding: 0; margin: 0; border: 0; background: none; cursor: pointer; line-height: 0;
+    -webkit-appearance: none; appearance: none;
   }
   .deck-btn:active { transform: translateY(1px); }
-  .deck-btn .n {
-    min-width: 26px; padding: 1px 7px; border-radius: 999px; font-size: .85rem; text-align: center;
-    background: var(--btn-bg); color: var(--btn-ink);
+  .deck-btn img {
+    height: 58px; width: auto; display: block; pointer-events: none; -webkit-user-drag: none; user-select: none;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,.3));
   }
   .deck {
     position: fixed; inset: 0; z-index: 22; display: none; flex-direction: column;
@@ -359,7 +357,7 @@
     <div class="wheel-wrap"><canvas id="wheel" role="img" aria-label="Prize wheel"></canvas></div>
     <div class="actions">
       <button id="spin" class="spin" type="button">Spin</button>
-      <button id="deckBtn" class="deck-btn" type="button" aria-label="Show the deck">Deck <span id="deckN" class="n">52</span></button>
+      <button id="deckBtn" class="deck-btn" type="button" aria-label="Show the deck"><img alt="" src="data:image/webp;base64,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"></button>
     </div>
     <div id="result" class="result" aria-live="polite"></div>
   </section>
@@ -413,10 +411,11 @@
     <button id="simulate" class="btn" type="button">Test 1,000 spins</button>
     <button id="reset" class="btn" type="button">Clear results</button>
     <button id="newDeck" class="btn" type="button">New deck</button>
+    <button id="resetAll" class="btn" type="button">Restore defaults</button>
     <button id="changePin" class="btn" type="button">Change PIN</button>
     <span id="spinCount" class="count"></span>
   </div>
-  <p class="note">Odds always add up to 100%. Moving one slider rescales the others, except locked ones. Use "Equal slices" so the wheel itself doesn't show the odds. The gamble wheel is always a fair 50/50. Untick "Allow gamble on this prize" and the pop up shows straight away with no buttons. Tick "Bad prize" and it says UNLUCKY! instead of CONGRATULATIONS!. Drag the dots on the left of a prize to change the wheel order. Cards that have been won leave the wheel on the next spin and show faded in the Deck tab. Tap New deck (twice) to put them all back. Prize settings reset when you close the page. Your PIN and theme are kept on this phone.</p>
+  <p class="note">Odds always add up to 100%. Moving one slider rescales the others, except locked ones. Use "Equal slices" so the wheel itself doesn't show the odds. The gamble wheel is always a fair 50/50. Untick "Allow gamble on this prize" and the pop up shows straight away with no buttons. Tick "Bad prize" and it says UNLUCKY! instead of CONGRATULATIONS!. Drag the dots on the left of a prize to change the wheel order. Cards that have been won leave the wheel on the next spin and show faded in the Deck tab. Tap New deck (twice) to put them all back. Everything here is saved on this phone, even when you close the app: the prizes, odds, order, colours, title, spin length and which cards have been drawn, along with your PIN and theme. Tap Restore defaults (twice) to go back to the original 52 cards.</p>
 </aside>
 
 <div id="deck" class="deck" role="dialog" aria-modal="true" aria-labelledby="deckTitle">
@@ -507,17 +506,64 @@
     const t = u.match(/\b(HEARTS?|CLUBS?|DIAMONDS?|SPADES?)\b/);
     return r && t ? RANK_WORDS[r[1]] + "-" + SUIT_WORDS[t[1]] : null;
   }
-  const DECK_KEY = "cueClubWheelDeck";
-  let memDeck = null;
+  const DECK_KEY = "cueClubWheelDeck";       // older saved format, still read once
+  const STATE_KEY = "cueClubWheelState";     // everything: prizes, odds, order, settings, deck
   const drawnStack = [];                     // cards already removed from the wheel
   function loadDeck() {
     try { const v = localStorage.getItem(DECK_KEY); if (v) { const a = JSON.parse(v); if (Array.isArray(a)) return a; } } catch (e) {}
-    return memDeck || [];
+    return [];
   }
-  function saveDeck() {
-    const keys = drawnStack.map(d => d.key).concat(prizes.filter(p => p.out).map(p => cardKey(p.name)));
-    memDeck = keys;
-    try { localStorage.setItem(DECK_KEY, JSON.stringify(keys)); } catch (e) {}
+  let saveTimer = null, wiped = false;
+  function saveNow() {
+    clearTimeout(saveTimer); saveTimer = null;
+    if (wiped) return;
+    try {
+      localStorage.setItem(STATE_KEY, JSON.stringify({
+        v: 2, prizes: prizes, stack: drawnStack, mode: mode, spinMs: spinMs, titleText: titleText,
+        totalSpins: totalSpins, gambles: gambles, gambleWins: gambleWins
+      }));
+    } catch (e) {}
+  }
+  function saveState() { clearTimeout(saveTimer); saveTimer = setTimeout(saveNow, 200); }
+  const saveDeck = saveState;
+  function cleanPrize(o) {
+    if (!o || typeof o !== "object") return null;
+    const w = Number(o.weight);
+    return {
+      id: Number.isFinite(o.id) ? o.id : ++uid,
+      name: String(o.name == null ? "" : o.name).slice(0, 40),
+      weight: Number.isFinite(w) && w >= 0 ? w : 0,
+      color: /^#[0-9a-f]{6}$/i.test(o.color) ? o.color : PALETTE[0],
+      locked: !!o.locked, gamble: !!o.gamble, bad: !!o.bad,
+      count: Number.isFinite(o.count) ? Math.max(0, Math.floor(o.count)) : 0,
+      out: !!o.out
+    };
+  }
+  const wholeNum = v => Number.isFinite(v) ? Math.max(0, Math.floor(v)) : 0;
+  function restoreState() {
+    let st = null;
+    try { const v = localStorage.getItem(STATE_KEY); if (v) st = JSON.parse(v); } catch (e) {}
+    if (!st || st.v !== 2 || !Array.isArray(st.prizes) || !Array.isArray(st.stack)) return false;
+    const live = st.prizes.map(cleanPrize).filter(Boolean);
+    const stack = st.stack.map(d => d && {
+      prize: cleanPrize(d.prize), key: d.key, idx: wholeNum(d.idx),
+      snap: Array.isArray(d.snap) ? d.snap.filter(x => Array.isArray(x) && x.length === 2) : []
+    }).filter(d => d && d.prize);
+    if (!live.length && !stack.length) return false;
+    prizes = live;
+    drawnStack.length = 0; stack.forEach(d => drawnStack.push(d));
+    uid = Math.max(uid, ...live.map(p => p.id), ...stack.map(d => d.prize.id));
+    if (prizes.length && Math.abs(prizes.reduce((a, p) => a + p.weight, 0) - 100) > 0.5) normalise();
+    if (st.mode === "equal" || st.mode === "odds") mode = st.mode;
+    if ([6000, 10000, 15000].includes(st.spinMs)) spinMs = st.spinMs;
+    if (typeof st.titleText === "string") titleText = st.titleText.slice(0, 40);
+    totalSpins = wholeNum(st.totalSpins); gambles = wholeNum(st.gambles); gambleWins = wholeNum(st.gambleWins);
+    document.querySelectorAll('input[name="mode"]').forEach(r => { r.checked = r.value === mode; });
+    document.querySelectorAll('input[name="len"]').forEach(r => { r.checked = r.value === String(spinMs); });
+    $("titleInput").value = titleText;
+    setTitle();
+    document.title = titleText || "Prize wheel";
+    return true;
   }
 
   let mode = "equal";
@@ -758,6 +804,7 @@
     buildList();
     refreshDeck();
     syncSpin();
+    saveState();
   }
   function newDeck() {
     if (spinning) return;
@@ -779,7 +826,6 @@
     const have = new Set(prizes.filter(p => !p.out).map(p => cardKey(p.name)));
     let n = 0;
     for (let r = 0; r < 13; r++) for (let s = 0; s < 4; s++) if (have.has(r + "-" + s)) n++;
-    $("deckN").textContent = n;
     $("deckBtn").setAttribute("aria-label", "Show the deck. " + n + " of 52 cards left");
     if (!deckEl.classList.contains("show")) return;
     $("deckCount").textContent = n + " of 52 cards left";
@@ -807,20 +853,26 @@
   }
   $("deckBtn").addEventListener("click", openDeck);
   $("deckClose").addEventListener("click", closeDeck);
-  let ndTimer = null;
-  function disarmNewDeck() {
-    clearTimeout(ndTimer);
-    const b = $("newDeck"); delete b.dataset.arm; b.textContent = "New deck";
+  function armButton(id, label, fn) {
+    const b = $(id); let t = null;
+    function disarm() { clearTimeout(t); delete b.dataset.arm; b.textContent = label; }
+    b.addEventListener("click", () => {
+      if (!b.dataset.arm) {
+        b.dataset.arm = "1"; b.textContent = "Tap again to confirm";
+        t = setTimeout(disarm, 3000);
+        return;
+      }
+      disarm();
+      fn();
+    });
   }
-  $("newDeck").addEventListener("click", () => {
-    const b = $("newDeck");
-    if (!b.dataset.arm) {
-      b.dataset.arm = "1"; b.textContent = "Tap again to confirm";
-      ndTimer = setTimeout(disarmNewDeck, 3000);
-      return;
-    }
-    disarmNewDeck();
-    newDeck();
+  armButton("newDeck", "New deck", newDeck);
+  armButton("resetAll", "Restore defaults", () => {
+    if (spinning) return;
+    wiped = true;
+    clearTimeout(saveTimer);
+    try { localStorage.removeItem(STATE_KEY); localStorage.removeItem(DECK_KEY); } catch (e) {}
+    location.reload();
   });
 
   /* ---------- spinning ---------- */
@@ -891,6 +943,7 @@
     }
     syncObs();
     syncSpin();
+    saveState();
   }
 
   function startGamble() {
@@ -1016,6 +1069,7 @@
     const byId = new Map(prizes.map(p => [String(p.id), p]));
     prizes = [...list.children].map(li => byId.get(li.dataset.id));
     syncWeights(); syncObs(); draw();
+    saveState();
   }
   function startDrag(e, li, grip) {
     if (e.button !== undefined && e.button !== 0) return;
@@ -1315,6 +1369,9 @@
 
   /* ---------- menu drawer ---------- */
   const drawer = $("drawer"), backdrop = $("backdrop"), menuBtn = $("menuBtn");
+  ["input", "change", "click"].forEach(ev => drawer.addEventListener(ev, saveState));
+  document.addEventListener("visibilitychange", () => { if (document.hidden) saveNow(); });
+  window.addEventListener("pagehide", saveNow);
   function setDrawer(open) {
     drawer.classList.toggle("open", open);
     backdrop.classList.toggle("show", open);
@@ -1379,11 +1436,13 @@
 
   new ResizeObserver(resize).observe(canvas);
   result.textContent = "Press Spin to play.";
-  loadDeck().forEach(k => {
-    const p = prizes.find(x => !x.out && cardKey(x.name) === k);
-    if (p) p.out = true;
-  });
-  flushRemoval();
+  if (!restoreState()) {
+    loadDeck().forEach(k => {                // older saved deck format
+      const p = prizes.find(x => !x.out && cardKey(x.name) === k);
+      if (p) p.out = true;
+    });
+    flushRemoval();
+  }
   buildList();
   refreshDeck();
   syncSpin();
